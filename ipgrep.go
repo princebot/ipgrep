@@ -16,10 +16,7 @@ import (
 	"github.com/mattn/go-colorable"
 )
 
-const (
-	prog       = "ipgrep"
-	banlistURL = `https://www.binarydefense.com/banlist.txt`
-)
+const prog = "ipgrep"
 
 const usage = `
 usage: %[1]v [file ...]
@@ -87,10 +84,15 @@ func main() {
 	// results in a channel.
 	for _, fp := range files {
 		wg.Add(1)
+		// TODO(princebot): Best practice would be to cap the number of
+		// goroutines this can launch, but this is just a simple little
+		// tool, and anyone calling it with hundreds of input files
+		// should prooooobably already be looking to fork/rewrite this
+		// if he wants it to be performant.
 		go func(fp *os.File) {
-			defer wg.Done()
-			defer fp.Close()
 			results <- scan(fp)
+			fp.Close()
+			wg.Done()
 		}(fp)
 	}
 	wg.Wait()
