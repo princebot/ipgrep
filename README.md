@@ -17,3 +17,5 @@ Given this input, however —
 	There’s no place like 127.0.0.1.
 
 — **ipgrep** extracts nothing: Technically, the final `.` renders that IP invalid, and this utility does not aspire to robustness.
+
+Use standard Golang-fu to install: `go get -u github.com/princebot/ipgrep`

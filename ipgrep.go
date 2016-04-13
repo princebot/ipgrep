@@ -57,7 +57,7 @@ func (r scanResult) Error() string {
 	if r.Err == nil {
 		return ""
 	}
-	return fmt.Sprintf("error: %v: %v", r.File, r.Err)
+	return fmt.Sprintf("%v: %v", r.File, r.Err)
 }
 
 func main() {
